@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BrightnessRegulator : MonoBehaviour {
 	// Materialを入れる
@@ -18,7 +19,7 @@ public class BrightnessRegulator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        
 		// タグによって光らせる色を変える
 		if (tag == "SmallStarTag") {
 			this.defaultColor = Color.white;
@@ -27,7 +28,6 @@ public class BrightnessRegulator : MonoBehaviour {
 		}else if(tag == "SmallCloudTag" || tag == "LargeCloudTag") {
 			this.defaultColor = Color.blue;
 		}
-
 		//オブジェクトにアタッチしているMaterialを取得
 		this.myMaterial = GetComponent<Renderer> ().material;
 
@@ -38,21 +38,24 @@ public class BrightnessRegulator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (this.degree >= 0) {
-			// 光らせる強度を計算する
-			Color emissionColor = this.defaultColor * (this.minEmission + Mathf.Sin (this.degree * Mathf.Deg2Rad) * this.magEmission);
+        if (this.degree >= 0)
+        {
+            // 光らせる強度を計算する
+            Color emissionColor = this.defaultColor * (this.minEmission + Mathf.Sin(this.degree * Mathf.Deg2Rad) * this.magEmission);
 
-			// エミッションに色を設定する
-			myMaterial.SetColor ("_EmissionColor", emissionColor);
+            // エミッションに色を設定する
+            myMaterial.SetColor("_EmissionColor", emissionColor);
 
-			//現在の角度を小さくする
-			this.degree -= this.speed;
-		}
+            //現在の角度を小さくする
+            this.degree -= this.speed;
+        }
+
 	}
 
 	//衝突時に呼ばれる関数
 	void OnCollisionEnter(Collision other) {
-		//角度を180に設定
-		this.degree = 180;
+        
+        //角度を180に設定
+        this.degree = 180;
 	}
 }
